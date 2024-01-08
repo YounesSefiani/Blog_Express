@@ -12,8 +12,15 @@ class articleManager extends AbstractManager {
   async create(article) {
     // Execute the SQL INSERT query to add a new article to the "article" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title) values (?)`,
-      [article.title]
+      `insert into ${this.table} (title, description, content, image_src, image_alt, author_id ) values (?, ?, ?, ?, ?, ?)`,
+      [
+        article.title,
+        article.description,
+        article.content,
+        article.image_src,
+        article.image_alt,
+        article.author_id,
+      ]
     );
 
     // Return the ID of the newly inserted article

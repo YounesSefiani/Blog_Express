@@ -21,27 +21,28 @@ router.post("/items", itemControllers.add);
 /* ************************************************************************* */
 
 const articleControllers = require("./controllers/articleControllers");
+const validateArticle = require("./validators/validateArticle");
 
 // Route to get a list of articles
-router.get("/articles", articleControllers.browse);
+router.get("/article", articleControllers.browse);
 
 // Route to get a specific article by ID
-router.get("/articles/:id", articleControllers.read);
+router.get("/article/:id", articleControllers.read);
 
 // Route to add a new article
-router.post("/articles", articleControllers.add);
+router.post("/article", validateArticle, articleControllers.add);
 
 /* ************************************************************************* */
 
 const authorControllers = require("./controllers/authorControllers");
 
 // Route to get a list of articles
-router.get("/authors", authorControllers.browse);
+router.get("/author", authorControllers.browse);
 
 // Route to get a specific article by ID
-router.get("/authors/:id", authorControllers.read);
+router.get("/author/:id", authorControllers.read);
 
 // Route to add a new article
-router.post("/authors", authorControllers.add);
+router.post("/author", authorControllers.add);
 
 module.exports = router;

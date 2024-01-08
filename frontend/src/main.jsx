@@ -1,30 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import axios from "axios";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import connexion from "./services/connexion";
 import App from "./App";
 import OneArticle from "./components/OneArticle";
+import Administration from "./pages/Admin/Administration";
+import AdminArticle from "./pages/Admin/AdminArticle";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     loader: async () => {
-      return axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/api/articles`)
-        .then((res) => res.data);
+      return connexion.get(`/article`).then((res) => res.data);
     },
   },
   {
-    path: "/articles/:id",
+    path: "/article/:id",
     element: <OneArticle />,
     loader: async ({ params }) => {
-      return axios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/api/articles/${params.id}`)
-        .then((res) => res.data);
+      return connexion.get(`/article/${params.id}`).then((res) => res.data);
     },
+  },
+  {
+    path: "/administration",
+    element: <Administration />,
+    children: [
+      {
+        path: "articles",
+        element: <AdminArticle />,
+      },
+    ],
   },
 ]);
 
